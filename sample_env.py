@@ -1,2 +1,4 @@
 # save csv directory
-DIR_NAME = ""
+INPUT_DIR_NAME = ""
+# save xlsx directory
+OUTPUT_DIR_NAME = ""

@@ -11,14 +11,15 @@ def main():
     input_file = sys.argv[1]
     output_file = sys.argv[2]
 
-    dir_name = env.DIR_NAME
+    input_dir_name = env.INPUT_DIR_NAME
+    output_dir_name = env.OUTPUT_DIR_NAME
     acc_list = []
     gyr_list = []
     csv_expand = ".csv"
     xlsx_expand = ".xlsx"
 
     try:
-        with open(dir_name + input_file + csv_expand, "r") as f:
+        with open(input_dir_name + input_file + csv_expand, "r") as f:
             reader = csv.reader(f)
             for row in reader:
                 if row[0] == '1':
@@ -33,11 +34,14 @@ def main():
     float_acc_list = functor.convert_list(float, acc_list)
     float_gyr_list = functor.convert_list(float, gyr_list)
 
+    float_acc_list.insert(0, [0, 0, "x", "y", "z"])
+    float_gyr_list.insert(0, [0, 0, "x", "y", "z"])
+
     df = pd.DataFrame(float_acc_list)
     df2 = pd.DataFrame(float_gyr_list)
-    with pd.ExcelWriter(dir_name + output_file + xlsx_expand) as w:
-        df.to_excel(w, sheet_name='sheet1')
-        df2.to_excel(w, sheet_name='sheet2')
+    with pd.ExcelWriter(output_dir_name + output_file + xlsx_expand) as w:
+        df.to_excel(w, sheet_name='Accelerometer')
+        df2.to_excel(w, sheet_name='Gyroscope')
 
 
 if __name__ == '__main__':
